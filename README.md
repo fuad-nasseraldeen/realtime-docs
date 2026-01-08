@@ -14,7 +14,9 @@ This project demonstrates real-world concepts such as authentication, authorizat
 
 **📹 Watch the Demo**
 
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/AJ23o3ecFgg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![Realtime Docs Demo Video](https://img.youtube.com/vi/AJ23o3ecFgg/maxresdefault.jpg)](https://youtu.be/AJ23o3ecFgg)
+
+*Click the image above to watch the demo on YouTube*
 
 </td>
 </tr>
