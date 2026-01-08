@@ -40,6 +40,14 @@ export function Header() {
               >
                 Profile
               </Link>
+              <Link
+                href="https://github.com/fuad-nasseraldeen/realtime-docs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-200 hover:text-white transition-colors"
+              >
+                GitHub
+              </Link>
               <button
                 onClick={handleLogout}
                 disabled={loggingOut}

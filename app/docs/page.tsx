@@ -163,8 +163,8 @@ export default function DocsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-2">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-white">Your docs</h1>
-          <p className="text-sm text-slate-200">
+          <h1 className="text-xl font-semibold tracking-tight text-slate-800">Your docs</h1>
+          <p className="text-sm text-slate-800">
             {docs.length === 0
               ? "Create your first document to get started"
               : `${docs.length} document${docs.length > 1 ? "s" : ""}`}
@@ -221,7 +221,7 @@ export default function DocsPage() {
           {docs.map((doc) => (
             <div
               key={doc.id}
-              className="flex items-center justify-between gap-2 px-4 py-3 text-sm hover:bg-slate-800/70 transition-colors group"
+              className="flex items-center justify-between gap-2 px-4 py-3 text-sm hover:bg-slate-800/70 hover:text-slate-100 transition-colors group"
             >
               <Link
                 href={`/docs/${doc.id}`}
@@ -232,7 +232,7 @@ export default function DocsPage() {
                     <p className="font-medium text-white">{doc.title}</p>
                     {doc.accessRole && (
                       <span
-                        className={`text-[10px] px-1.5 py-0.5 rounded ${
+                        className={`text-[14px] px-1.5 py-0.5 rounded ${
                           doc.accessRole === "owner"
                             ? "bg-blue-900/30 text-blue-300 border border-blue-800"
                             : doc.accessRole === "editor"
@@ -244,11 +244,11 @@ export default function DocsPage() {
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-300">
+                  <p className="text-xs text-slate-800">
                     Last updated: {formatDate(doc.updatedAt)}
                   </p>
                 </div>
-                <span className="text-[10px] uppercase tracking-wide text-slate-400">
+                <span className="text-[10px] uppercase tracking-wide text-slate-800/70 hover:text-slate-100">
                   Open
                 </span>
               </Link>
@@ -256,7 +256,7 @@ export default function DocsPage() {
                 <button
                   onClick={(e) => handleDelete(doc.id, e)}
                   disabled={deletingId === doc.id}
-                  className="ml-2 px-2 py-1 text-xs font-medium text-red-300 hover:text-red-200 hover:bg-red-900/20 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="ml-2 px-2 py-1 text-xs font-medium text-red-600 hover:text-red-200 hover:bg-red-900/20 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   title="Delete document"
                 >
                   {deletingId === doc.id ? "Deleting..." : "Delete"}

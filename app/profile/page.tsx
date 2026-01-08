@@ -30,7 +30,7 @@ export default function ProfilePage() {
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="space-y-2">
         <h1 className="text-xl font-semibold tracking-tight text-white">Profile</h1>
-        <p className="text-sm text-slate-200">
+        <p className="text-sm text-slate-900">
           Your account information
         </p>
       </div>

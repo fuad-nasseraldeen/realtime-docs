@@ -37,8 +37,8 @@ export default function RootLayout({
               {children}
             </main>
 
-            <footer className="border-t border-slate-900/60 py-4 text-center text-xs text-slate-300">
-              Collaborative docs scaffold &mdash; realtime and auth coming soon.
+            <footer className="border-t border-slate-900/60 py-4 text-center text-xs text-slate-900">
+              Collaborative docs scaffold &mdash; By Fuad Nasiraldin.
             </footer>
           </div>
         </Providers>

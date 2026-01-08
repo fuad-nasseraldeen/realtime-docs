@@ -1,9 +1,25 @@
 # Realtime Collaborative Documents (Notion-lite)
 
+<table>
+<tr>
+<td width="50%">
+
 A real-time collaborative document editor built with **Next.js**, **MongoDB**, and **Yjs**.  
 The application allows multiple users to create, edit, and share documents with fine-grained permissions, while synchronizing changes live using **WebSockets** and **CRDTs**.
 
 This project demonstrates real-world concepts such as authentication, authorization, real-time state synchronization, and multi-user system design.
+
+</td>
+<td width="50%">
+
+<video width="100%" controls>
+  <source src="video-flow.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+</td>
+</tr>
+</table>
 
 ---
 
