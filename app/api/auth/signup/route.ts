@@ -49,7 +49,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Log the full error for debugging
     console.error("Signup error:", error);
+    
+    // Check if it's a MongoDB connection error
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    if (errorMessage.includes("Mongo URI") || errorMessage.includes("MongoDB")) {
+      console.error("MongoDB connection error - check MONGODB_URI environment variable");
+      return NextResponse.json(
+        { error: "Database connection error. Please try again later." },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

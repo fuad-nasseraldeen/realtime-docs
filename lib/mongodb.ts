@@ -6,11 +6,13 @@ let client: MongoClient;
 let clientPromise: Promise<MongoClient> | null = null;
 
 function getMongoClient(): Promise<MongoClient> {
-  if (!process.env.MONGODB_URI) {
-    throw new Error("Please add your Mongo URI to .env.local");
-  }
 
   const uri: string = process.env.MONGODB_URI;
+
+  if (!uri) {
+    // IMPORTANT: message should mention Vercel env vars too
+    throw new Error("Missing MONGODB_URI. Set it in .env.local (local) or Vercel Environment Variables (prod).");
+  }
 
   if (process.env.NODE_ENV === "development") {
     // In development mode, use a global variable so that the value
