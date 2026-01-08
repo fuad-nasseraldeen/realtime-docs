@@ -7,6 +7,68 @@ This project demonstrates real-world concepts such as authentication, authorizat
 
 ---
 
+## 🏗️ System Architecture
+
+![System Overview](system_overview.png)
+## This diagram illustrates how HTTP APIs, WebSocket-based realtime sync, and MongoDB interact to support secure collaborative editing.
+
+### Key idea
+- HTTP API is responsible for **security & persistence** (auth, permissions, MongoDB writes).
+- WebSocket server is responsible for **realtime sync only** (broadcasting Yjs CRDT updates per document room).
+- Documents are **private by default** and access is granted explicitly via collaborators (viewer/editor).
+
+```mermaid
+flowchart TB
+  FE[Frontend Next.js\nDocs UI + Editor] -->|HTTP: Auth + CRUD + Sharing| API[Backend Next.js API\nEnforces permissions]
+  API -->|Read/Write| DB[(MongoDB\nUsers + Documents + Collaborators)]
+  FE <-->|WS: Yjs updates room=docId| WS[Realtime Server :1234\nSync only no DB]
+```
+
+```mermaid
+erDiagram
+  USERS {
+    string _id
+    string email
+    string passwordHash
+    date createdAt
+  }
+
+  DOCUMENTS {
+    string _id
+    string ownerId
+    string title
+    string content
+    date createdAt
+    date updatedAt
+  }
+
+  COLLABORATORS {
+    string userId
+    string role  "viewer|editor"
+    date addedAt
+  }
+
+  USERS ||--o{ DOCUMENTS : "owns ownerId"
+  DOCUMENTS ||--o{ COLLABORATORS : "shares with"
+  USERS ||--o{ COLLABORATORS : "can access"
+```
+
+```mermaid
+flowchart LR
+  U[User Browser] -->|HTTP| FE[Next.js App Router\nPages: /signup /login /docs /docs/:id]
+  FE -->|HTTP| API[Next.js Route Handlers\n/api/auth/*\n/api/docs/*]
+
+  API -->|MongoDB Driver| DB[(MongoDB)]
+  API --> AUTH[NextAuth Credentials\nJWT/Session]
+
+  FE <-->|WebSocket Yjs updates| WS[Realtime Server\nws://localhost:1234\nRoom = docId]
+  WS -.->|No direct DB access| WS
+
+  DB --> USERS[Collection: users\n_id, email, passwordHash, createdAt]
+  DB --> DOCS[Collection: documents\n_id, ownerId, title, content,\ncollaborators array, createdAt, updatedAt]
+```
+---
+
 ## 🚀 Features
 
 ### 🔐 Authentication
@@ -72,69 +134,6 @@ For any document request:
 
 ---
 
-## 🏗️ System Architecture
-
-![System Overview](system_overview.png)
-## This diagram illustrates how HTTP APIs, WebSocket-based realtime sync, and MongoDB interact to support secure collaborative editing.
-
-### Key idea
-- HTTP API is responsible for **security & persistence** (auth, permissions, MongoDB writes).
-- WebSocket server is responsible for **realtime sync only** (broadcasting Yjs CRDT updates per document room).
-- Documents are **private by default** and access is granted explicitly via collaborators (viewer/editor).
-
-```mermaid
-flowchart TB
-  FE[Frontend Next.js\nDocs UI + Editor] -->|HTTP: Auth + CRUD + Sharing| API[Backend Next.js API\nEnforces permissions]
-  API -->|Read/Write| DB[(MongoDB\nUsers + Documents + Collaborators)]
-  FE <-->|WS: Yjs updates room=docId| WS[Realtime Server :1234\nSync only no DB]
-```
-
-```mermaid
-erDiagram
-  USERS {
-    string _id
-    string email
-    string passwordHash
-    date createdAt
-  }
-
-  DOCUMENTS {
-    string _id
-    string ownerId
-    string title
-    string content
-    date createdAt
-    date updatedAt
-  }
-
-  COLLABORATORS {
-    string userId
-    string role  "viewer|editor"
-    date addedAt
-  }
-
-  USERS ||--o{ DOCUMENTS : "owns ownerId"
-  DOCUMENTS ||--o{ COLLABORATORS : "shares with"
-  USERS ||--o{ COLLABORATORS : "can access"
-```
-
-```mermaid
-flowchart LR
-  U[User Browser] -->|HTTP| FE[Next.js App Router\nPages: /signup /login /docs /docs/:id]
-  FE -->|HTTP| API[Next.js Route Handlers\n/api/auth/*\n/api/docs/*]
-
-  API -->|MongoDB Driver| DB[(MongoDB)]
-  API --> AUTH[NextAuth Credentials\nJWT/Session]
-
-  FE <-->|WebSocket Yjs updates| WS[Realtime Server\nws://localhost:1234\nRoom = docId]
-  WS -.->|No direct DB access| WS
-
-  DB --> USERS[Collection: users\n_id, email, passwordHash, createdAt]
-  DB --> DOCS[Collection: documents\n_id, ownerId, title, content,\ncollaborators[], createdAt, updatedAt]
-```
-
----
-
 ## ▶️ Running the Project
 
 ### 1. Start the Realtime WebSocket Server
@@ -142,3 +141,13 @@ The realtime server runs on port **1234** and is required for live collaboration
 
 ```bash
 npm run realtime
+```
+
+### 2. Start the Next.js Development Server
+In a separate terminal, start the Next.js application:
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:3000`
