@@ -1,15 +1,15 @@
 export default function Home() {
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-semibold tracking-tight">
+      <h1 className="text-2xl font-semibold tracking-tight text-white">
         Realtime Docs scaffold
       </h1>
-      <p className="max-w-xl text-sm text-slate-300">
+      <p className="max-w-xl text-sm text-slate-200">
         This is a minimal starting point for a collaborative docs app. Auth and
         realtime syncing are intentionally omitted for now so you can focus on
         your data model and editor experience.
       </p>
-      <ul className="mt-4 space-y-2 text-sm text-slate-300">
+      <ul className="mt-4 space-y-2 text-sm text-slate-200">
         <li className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
           <span>

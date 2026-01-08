@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Link from "next/link";
 import { Providers } from "@/components/providers";
+import { Header } from "@/components/header";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,43 +29,19 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 text-slate-100`}
       >
-        <div className="min-h-screen flex flex-col">
-          <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur">
-            <nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4">
-              <Link href="/" className="text-sm font-semibold tracking-tight">
-                Realtime Docs
-              </Link>
-              <div className="flex items-center gap-4 text-sm">
-                <Link
-                  href="/docs"
-                  className="text-slate-100/80 hover:text-white transition-colors"
-                >
-                  Docs
-                </Link>
-                <Link
-                  href="/login"
-                  className="text-slate-100/80 hover:text-white transition-colors"
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/signup"
-                  className="inline-flex items-center rounded-md border border-slate-700 px-3 py-1 text-xs font-medium text-slate-100 hover:bg-slate-800 transition-colors"
-                >
-                  Signup
-                </Link>
-              </div>
-            </nav>
-          </header>
+        <Providers>
+          <div className="min-h-screen flex flex-col">
+            <Header />
 
-          <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 py-8">
-            <Providers>{children}</Providers>
-          </main>
+            <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 py-8">
+              {children}
+            </main>
 
-          <footer className="border-t border-slate-900/60 py-4 text-center text-xs text-slate-500">
-            Collaborative docs scaffold &mdash; realtime and auth coming soon.
-          </footer>
-        </div>
+            <footer className="border-t border-slate-900/60 py-4 text-center text-xs text-slate-300">
+              Collaborative docs scaffold &mdash; realtime and auth coming soon.
+            </footer>
+          </div>
+        </Providers>
       </body>
     </html>
   );

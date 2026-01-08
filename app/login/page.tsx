@@ -41,8 +41,8 @@ export default function LoginPage() {
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="space-y-2">
-        <h1 className="text-xl font-semibold tracking-tight">Log in</h1>
-        <p className="text-sm text-slate-400">
+        <h1 className="text-xl font-semibold tracking-tight text-white">Log in</h1>
+        <p className="text-sm text-slate-200">
           Sign in to access your collaborative documents.
         </p>
       </div>
@@ -57,7 +57,7 @@ export default function LoginPage() {
         <div className="space-y-1">
           <label
             htmlFor="email"
-            className="block text-xs font-medium text-slate-300"
+            className="block text-xs font-medium text-slate-200"
           >
             Email
           </label>
@@ -68,7 +68,7 @@ export default function LoginPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="block w-full rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none ring-0 placeholder:text-slate-500 focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+            className="block w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white outline-none ring-0 placeholder:text-slate-400 focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
             placeholder="you@example.com"
           />
         </div>
@@ -76,7 +76,7 @@ export default function LoginPage() {
         <div className="space-y-1">
           <label
             htmlFor="password"
-            className="block text-xs font-medium text-slate-300"
+            className="block text-xs font-medium text-slate-200"
           >
             Password
           </label>
@@ -87,7 +87,7 @@ export default function LoginPage() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="block w-full rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none ring-0 placeholder:text-slate-500 focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+            className="block w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white outline-none ring-0 placeholder:text-slate-400 focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
             placeholder="••••••••"
           />
         </div>
@@ -101,7 +101,7 @@ export default function LoginPage() {
         </button>
       </form>
 
-      <p className="text-xs text-slate-400">
+      <p className="text-xs text-slate-200">
         Don&apos;t have an account?{" "}
         <Link
           href="/signup"
