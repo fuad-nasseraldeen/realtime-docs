@@ -1,69 +1,81 @@
-## Real-Time Collaborative Docs App
+# Realtime Collaborative Documents (Notion-lite)
 
-A full-stack web application that allows users to create, edit, and manage documents with real-time collaboration.
+A real-time collaborative document editor built with **Next.js**, **MongoDB**, and **Yjs**.  
+The application allows multiple users to create, edit, and share documents with fine-grained permissions, while synchronizing changes live using **WebSockets** and **CRDTs**.
 
-The app supports user authentication, secure document ownership, and CRUD operations for documents.  
-Built with modern web technologies and designed to demonstrate scalable architecture, secure authentication, and real-time collaboration using Yjs.
+This project demonstrates real-world concepts such as authentication, authorization, real-time state synchronization, and multi-user system design.
 
-**Key features:**
-- User signup and login with credentials authentication
-- Secure document ownership and access control
-- Create, read, update, and delete documents
-- Real-time collaborative editing using Yjs and WebSockets
-- Clean Next.js App Router architecture
-- MongoDB-based data persistence
+---
 
-## Getting Started
+## 🚀 Features
 
-### Prerequisites
+### 🔐 Authentication
+- Signup & Login using **NextAuth (Credentials)**
+- Session/JWT based authentication
+- Secure password hashing with bcrypt
 
-- Node.js 16+ 
-- MongoDB instance (local or Atlas)
-- Environment variables configured (see `.env.local.example`)
+### 📄 Documents
+- Create, read, update, delete documents (CRUD)
+- Documents are **private by default**
+- Each document belongs to an owner
 
-### Installation
+### 🤝 Sharing & Permissions
+Documents support explicit sharing with roles:
+- **Owner** – full access (edit, share, delete)
+- **Editor** – can edit and save content
+- **Viewer** – read-only access
+
+Permissions can be:
+- Granted
+- Updated (viewer ↔ editor)
+- Revoked
+
+### ⚡ Realtime Collaboration
+- Live text synchronization between multiple users
+- Multiple users can edit the same document simultaneously
+- Changes appear instantly without conflicts
+- Powered by:
+  - **WebSockets**
+  - **Yjs (CRDT)** for conflict-free concurrent editing
+
+### 💾 Persistence
+- All data stored in **MongoDB**
+- Documents and permissions are persisted
+- Content can be saved as snapshots
+
+---
+
+## 🧠 How It Works (High Level)
+
+### Authentication Flow
+1. User signs up (`/signup`)
+2. Input validated on server (Zod)
+3. Password hashed and stored in MongoDB
+4. User logs in (`/login`)
+5. Session/JWT created via NextAuth
+
+### Document Access Flow
+For any document request:
+1. Verify authenticated session
+2. Validate document ID (MongoDB ObjectId)
+3. Check document existence
+4. Enforce permissions (owner/editor/viewer)
+5. Allow or deny access accordingly
+
+### Realtime Collaboration Flow
+- Each document is mapped to a WebSocket “room” using its document ID
+- Clients connected to the same document receive live updates
+- Yjs CRDT ensures:
+  - No text conflicts
+  - Consistent state across clients
+- Authorization is enforced at the HTTP/API layer
+
+---
+
+## ▶️ Running the Project
+
+### 1. Start the Realtime WebSocket Server
+The realtime server runs on port **1234** and is required for live collaboration:
 
 ```bash
-npm install
-```
-
-### Running the Application
-
-**Important:** You need to run both servers for real-time collaboration to work:
-
-1. **Start the WebSocket server** (for real-time collaboration):
-   ```bash
-   npm run realtime
-   ```
-   This starts the Yjs WebSocket server on `ws://localhost:1234`
-
-2. **Start the Next.js development server** (in a separate terminal):
-   ```bash
-   npm run dev
-   ```
-   This starts the Next.js app on `http://localhost:3000`
-
-### Environment Variables
-
-Create a `.env.local` file with:
-
-```
-MONGODB_URI=your-mongodb-connection-string
-NEXTAUTH_SECRET=your-secret-key (generate with: openssl rand -base64 32)
-NEXTAUTH_URL=http://localhost:3000
-```
-
-### Usage
-
-1. Sign up for an account at `/signup`
-2. Log in at `/login`
-3. Create documents at `/docs`
-4. Open a document to start editing
-5. Open the same document in another browser window to see real-time collaboration
-
-The document editor shows a connection status indicator:
-- **Connected** (green) - Real-time sync is active
-- **Connecting** (yellow) - Establishing connection
-- **Disconnected** (red) - Connection lost
-
-Changes sync in real-time across all connected clients. Use the "Save" button to persist changes to the database.
+npm run realtime
