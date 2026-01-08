@@ -6,18 +6,16 @@ let client: MongoClient;
 let clientPromise: Promise<MongoClient> | null = null;
 
 function getMongoClient(): Promise<MongoClient> {
-
   const uri = process.env.MONGODB_URI;
 
   if (!uri) {
-    // IMPORTANT: message should mention Vercel env vars too
-    throw new Error("Missing MONGODB_URI. Set it in .env.local (local) or Vercel Environment Variables (prod).");
+    throw new Error(
+      "Missing MONGODB_URI. Set it in .env.local (local) or Vercel Environment Variables (prod)."
+    );
   }
 
   if (process.env.NODE_ENV === "development") {
-    // In development mode, use a global variable so that the value
-    // is preserved across module reloads caused by HMR (Hot Module Replacement).
-    let globalWithMongo = global as typeof globalThis & {
+    const globalWithMongo = global as typeof globalThis & {
       _mongoClientPromise?: Promise<MongoClient>;
     };
 
@@ -25,18 +23,19 @@ function getMongoClient(): Promise<MongoClient> {
       client = new MongoClient(uri, options);
       globalWithMongo._mongoClientPromise = client.connect();
     }
-    return globalWithMongo._mongoClientPromise;
-  } else {
-    // In production mode, it's best to not use a global variable.
-    if (!clientPromise) {
-      client = new MongoClient(uri, options);
-      clientPromise = client.connect();
-    }
-    return clientPromise;
+
+    return globalWithMongo._mongoClientPromise!;
   }
+
+  if (!clientPromise) {
+    client = new MongoClient(uri, options);
+    clientPromise = client.connect();
+  }
+
+  return clientPromise;
 }
 
 export async function getDb(): Promise<Db> {
-  const client = await getMongoClient();
-  return client.db();
+  const c = await getMongoClient();
+  return c.db();
 }
