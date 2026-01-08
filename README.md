@@ -10,15 +10,13 @@ The application allows multiple users to create, edit, and share documents with 
 This project demonstrates real-world concepts such as authentication, authorization, real-time state synchronization, and multi-user system design.
 
  </td>
- <td width="50%">
+<td width="50%">
 
- **📹 Watch the Demo on YouTube**
+**📹 Watch the Demo**
 
- [![Realtime Docs Demo](https://img.youtube.com/vi/AJ23o3ecFgg/0.jpg)](https://youtu.be/AJ23o3ecFgg)
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/AJ23o3ecFgg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
- > Click the thumbnail above to watch the real-time collaboration demo video.
-
- </td>
+</td>
 </tr>
 </table>
 
