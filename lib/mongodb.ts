@@ -7,7 +7,7 @@ let clientPromise: Promise<MongoClient> | null = null;
 
 function getMongoClient(): Promise<MongoClient> {
 
-  const uri: string = process.env.MONGODB_URI;
+  const uri = process.env.MONGODB_URI;
 
   if (!uri) {
     // IMPORTANT: message should mention Vercel env vars too
