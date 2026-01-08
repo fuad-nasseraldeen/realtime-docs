@@ -107,6 +107,7 @@ export default function DocPage() {
           const newRole = updatedDoc.accessRole;
 
           if (oldRole && newRole && oldRole !== newRole) {
+            alert(`Your role has been updated to: ${newRole}`);
             setRoleChangeNotification(`Your role has been updated to: ${newRole}`);
             setTimeout(() => setRoleChangeNotification(null), 5000);
             // Re-fetch document to update permissions
